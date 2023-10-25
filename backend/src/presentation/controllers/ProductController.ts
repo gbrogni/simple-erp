@@ -29,8 +29,13 @@ export class ProductController {
             return reply.status(400).send({ message: error.message });
         }
     }
-}
 
-export function createProductHandler(productController: ProductController): (request: FastifyRequest, reply: FastifyReply) => Promise<void> {
-    return productController.createProduct.bind(productController);
+    public async getProducts(request: any, reply: FastifyReply): Promise<void> {
+        try {
+            const products = await this.productUseCase.GetProducts();
+            return reply.status(200).send(products);
+        } catch (error: any) {
+            return reply.status(400).send({ message: error.message });
+        }
+    }
 }

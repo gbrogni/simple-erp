@@ -1,11 +1,10 @@
-import { FastifyInstance } from "fastify"
 import { ProductController } from "./controllers/ProductController"
 
-export async function productsRoutes(app: FastifyInstance) {
+export async function createProductRoutes(app: any, controller: ProductController) {
 
-    const productController = new ProductController()
-  
-    app.get('/products/create', productController.createProduct.bind(productController))
-  
-  }
-  
+    app.post('/products', controller.createProduct);
+    app.get('/products', controller.getProducts);
+
+    return app;
+
+}

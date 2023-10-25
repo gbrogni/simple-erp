@@ -2,8 +2,6 @@ import { HeaderContainer, HeaderContent, NewProductButton } from "./styles";
 import * as Dialog from '@radix-ui/react-dialog';
 import { NewProductModal } from "../NewProductModal";
 
-import logoImg from "../../assets/apollo2.png";
-
 export function Header() {
     return (
         <HeaderContainer>

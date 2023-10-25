@@ -1,13 +1,10 @@
-
-do
-$$
-begin
-  if not exists (select * from pg_user where usename = 'erp') then 
-    CREATE USER erp WITH PASSWORD 'psd-erp-db';
-    end if;
-  end
-$$
-;
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_user WHERE usename = 'root') THEN
+    CREATE USER erp WITH PASSWORD 'root123';
+  END IF;
+END
+$$;
 
 SELECT 'CREATE DATABASE erp' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'erp');
 

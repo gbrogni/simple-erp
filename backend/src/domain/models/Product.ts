@@ -24,13 +24,3 @@ export default class Product {
         return new Product(id, name, description, color, productCategory, price, promotionalPrice);
     }
 }
-
-export interface DriverOutput {
-    id: string,
-    name: string,
-    email: string,
-    document: string,
-    carPlate: string,
-    createdAt: Date,
-    updatedAt: Date,
-}

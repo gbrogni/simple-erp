@@ -17,4 +17,8 @@ export class ProductUseCase implements IProductUseCase {
         )
         await this.productRepository.createProduct(product)
     }
+
+    async GetProducts(): Promise<Product[]> {
+        return await this.productRepository.getProducts()
+    }
 }

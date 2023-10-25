@@ -43,7 +43,7 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
     const [products, setProducts] = useState<Product[]>([]);
 
     const fetchProducts = useCallback(async (query?: string) => {
-        const response = await api.get('products', {
+        const response = await api.get('/products', {
             params: {
                 q: query
             }
@@ -56,7 +56,7 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
         async (data: CreateProductInput) => {
             const { name, description, color, productCategory, price, promotionalPrice } = data
 
-            const response = await api.post('transactions', {
+            const response = await api.post('/products', {
                 name,
                 description,
                 color,

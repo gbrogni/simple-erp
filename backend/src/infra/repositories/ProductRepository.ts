@@ -14,7 +14,7 @@ export class ProductRepository implements IProductRepository {
     async getProductById(productId: string): Promise<Product> {
         const [productData] = await this.connection.query("SELECT * FROM products where id = $1", [productId])
         if (!productData) {
-            throw new Error("Invalid driver id");
+            throw new Error("Invalid product id");
         }
         return new Product(productData.id, productData.name, productData.description, productData.color, productData.productCategory, productData.price, productData.promotionalPrice);
     }

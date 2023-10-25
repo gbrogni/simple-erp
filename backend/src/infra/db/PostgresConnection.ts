@@ -9,7 +9,7 @@ export default class PostgresConnection implements DatabaseConnection {
   private connection: any; 
 
   async connect(): Promise<void> {
-    this.connection = await postgres()("postgres://account:psd-account-db@localhost:5433/account")
+    this.connection = await postgres()("postgres://erp:psd-erp-db@localhost:5432/erp")
   }
   
   async query(statement: string, params: any): Promise<any> {
