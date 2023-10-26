@@ -13,6 +13,7 @@ npm run dev
 
 What would be my firts improvements if I had more time:
 
+- I did not have the time to finish the implementation, so definetely my first improvement would be finish it.
 - Implement tests in both projects;
 - Build the backend with a better structure;
 - Create validations;
