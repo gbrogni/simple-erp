@@ -6,12 +6,14 @@ import { ProductUseCase } from '@/domain/use-cases/ProductUseCase';
 import PostgresConnection from './infra/db/PostgresConnection';
 import { ProductRepository } from './infra/repositories/ProductRepository';
 import { createProductRoutes } from './presentation/routes';
+import { IProductUseCase } from './application/use-cases/IProductUseCase';
 
 export const app = fastify();
 
 const db = new PostgresConnection();
+
 const productRepository = new ProductRepository(db);
-const productUseCase = new ProductUseCase(productRepository);
+const productUseCase: IProductUseCase = new ProductUseCase(productRepository);
 const productController = new ProductController(productUseCase);
 
 app.register(createProductRoutes(app, productController))

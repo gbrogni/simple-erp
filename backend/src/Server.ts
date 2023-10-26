@@ -1,5 +1,10 @@
-import { app } from './App';
 import { env } from '@/env';
+import fastify from 'fastify';
+import { app } from './App';
+
+app.get('/', (req, reply) => {
+  reply.send('Hello, World!');
+});
 
 app
   .listen({

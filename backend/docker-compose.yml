@@ -6,10 +6,9 @@ services:
     container_name: pg-technical-test
     environment:
       POSTGRES_DB: pg-technical-test
-      POSTGRES_USER: root
+      POSTGRES_USER: erp
       POSTGRES_PASSWORD: root123
     ports:
       - "5432:5432"
     volumes:
       - ./init-db/setup.sql:/docker-entrypoint-initdb.d/01_setup.sql
-      - ./init-db/create-tables.sql:/docker-entrypoint-initdb.d/02_create-tables.sql
