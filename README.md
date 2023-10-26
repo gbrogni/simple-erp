@@ -6,7 +6,7 @@ The database are centralized on the docker-compose on the backend folder, so you
 
 docker-compose up
 
-The you can run the api and app running in each terminal:
+Then you can run the api and app running in each terminal:
 
 npm run dev
 
