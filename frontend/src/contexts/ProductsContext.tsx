@@ -12,12 +12,6 @@ interface Product {
     promotionalPrice: number;
 }
 
-// interface ProductCategory {
-//     id: number;
-//     name: string;
-//     discount: number;
-// }
-
 interface CreateProductInput {
     name: string;
     description: string;

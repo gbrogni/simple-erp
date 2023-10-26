@@ -18,6 +18,14 @@ const newProductFormSchema = z.object({
 
 type NewProductFormInputs = z.infer<typeof newProductFormSchema>;
 
+const categoryOptions = [
+  { value: 'Smartphones', label: 'Smartphones' },
+  { value: 'Furniture', label: 'Furniture' },
+  { value: 'Electronics', label: 'Electronics' },
+  { value: 'Appliances', label: 'Appliances' },
+  { value: 'Refrigerators', label: 'Refrigerators' },
+];
+
 export function NewProductModal() {
   const createProduct = useContextSelector(
     ProductsContext,
@@ -50,7 +58,6 @@ export function NewProductModal() {
     reset();
   }
 
-
   return (
     <Dialog.Portal>
       <Overlay />
@@ -78,12 +85,19 @@ export function NewProductModal() {
             required
             {...register('color')}
           />
-          <input
-            type="text"
-            placeholder="Categoria"
+          <select
             required
             {...register('productCategory')}
-          />
+          >
+            <option value="" disabled>
+              Selecione uma categoria
+            </option>
+            {categoryOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
           <input
             type="number"
             placeholder="Preço"
