@@ -3,7 +3,7 @@ Running the project
 You need to install each project dependencies, so you need to open 2 terminal, one in each folder and run the command npm i in each folder:
 
 cd backend 
-cod frontend
+cd frontend
 
 The database are centralized on the docker-compose on the backend folder, so you have to spin it as the first step.
 
