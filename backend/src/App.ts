@@ -1,22 +1,18 @@
 import fastify from 'fastify';
 import { ZodError } from 'zod';
 import { env } from '@/env';
-import { ProductController } from '@/presentation/controllers/ProductController';
-import { ProductUseCase } from '@/domain/use-cases/ProductUseCase';
-import PostgresConnection from './infra/db/PostgresConnection';
-import { ProductRepository } from './infra/repositories/ProductRepository';
-import { createProductRoutes } from './presentation/routes';
-import { IProductUseCase } from './application/use-cases/IProductUseCase';
+import { ProductRoutes } from './presentation/controllers/Products/routes';
+import { ProductsCategoryRoutes } from './presentation/controllers/ProductCategories/routes';
 
 export const app = fastify();
 
-const db = new PostgresConnection();
+app.register(ProductRoutes);
+app.register(ProductsCategoryRoutes);
 
-const productRepository = new ProductRepository(db);
-const productUseCase: IProductUseCase = new ProductUseCase(productRepository);
-const productController = new ProductController(productUseCase);
-
-app.register(createProductRoutes(app, productController))
+app.register(require('@fastify/cors'), {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+});
 
 app.setErrorHandler((error, _, reply) => {
     if (error instanceof ZodError) {
@@ -27,7 +23,7 @@ app.setErrorHandler((error, _, reply) => {
 
     if (env.NODE_ENV !== 'production') {
         console.error(error);
-    } 
+    }
 
     return reply.status(500).send({ message: 'Internal server error.' });
 });

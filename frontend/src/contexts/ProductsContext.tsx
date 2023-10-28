@@ -18,7 +18,6 @@ interface CreateProductInput {
     color: string;
     productCategory: string;
     price: number;
-    promotionalPrice: number;
 }
 
 interface ProductContextType {
@@ -43,20 +42,21 @@ export function ProductsProvider({ children }: ProductsProviderProps) {
             }
         })
 
-        setProducts(response.data)
+        setProducts(response.data.products.products)
     }, []);
 
     const createProduct = useCallback(
         async (data: CreateProductInput) => {
-            const { name, description, color, productCategory, price, promotionalPrice } = data
+            const { name, description, color, productCategory, price } = data
+
+            console.log(data)
 
             const response = await api.post('/products', {
                 name,
                 description,
                 color,
                 productCategory,
-                price,
-                promotionalPrice
+                price
             })
 
             setProducts(state => [response.data, ...state])

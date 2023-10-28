@@ -1,5 +1,4 @@
 import { env } from '@/env';
-import fastify from 'fastify';
 import { app } from './App';
 
 app.get('/', (req, reply) => {
@@ -8,9 +7,12 @@ app.get('/', (req, reply) => {
 
 app
   .listen({
-    host: '0.0.0.0',
-    port: env.PORT,
+    host: 'localhost',
+    port: 3333,
   })
-  .then(() => {
-    console.log('🚀 HTTP Server Running!')
+  .then((address) => {
+    console.log(`🚀 HTTP Server Running on ${address}`);
   })
+  .catch((err) => {
+    console.error(`Error starting the server: ${err}`);
+  });
