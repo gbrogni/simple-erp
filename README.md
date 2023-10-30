@@ -2,9 +2,11 @@ Running the project
 
 You need to install each project dependencies, so you need to open 2 terminals, one in each folder and run the command npm i in each folder:
 
-The database are centralized on the docker-compose on the backend folder, so you have to spin it as the first step.
+Node version: 18.18.2
 
-docker-compose up
+The database is centralized in the docker-compose file in the backend folder, so you should have Docker on your machine and run it as the first step.
+
+docker-compose up -d
 
 Then you can run the api and app running in each terminal:
 
@@ -12,12 +14,12 @@ npm run dev
 
 What would be my firts improvements if I had more time:
 
-- I did not have the time to finish the implementation, so definetely my first improvement would be finish it.
 - Implement tests in both projects;
-- Build the backend with a better structure;
 - Create validations;
+- Improve the design of the frontend;
+- Create ErrorHandlers;
+- Implement the update functions in frontend, because in the backend it is already implemented;
 
-Thinking about adding more categories, as it stands today, it would only be necessary to add the new options to the frontend options list and incorporate these options into the function that calculates the promotional price on the backend.
+In my current solution, it is possible to add new categories, and once you created a new category, when you try to create a new product, that category will be there.
 
-I would structure the database and data structure for categories to have a list of product IDs. Then, every time a category is changed, there would be a function to recalculate the prices of the products and save them in the database.
-It would be a one-to-many relationship from one category to multiple products.
+The only thing that needs to be done is to implement the update functions on the frontend because in the backend, when changing a category, there's a part where it checks if there are any products with that category, and recalculates the product's price.
