@@ -1,16 +1,7 @@
 import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { api } from '../lib/axios';
 import { createContext } from 'use-context-selector';
-
-interface Product {
-    id: number;
-    name: string;
-    description: number;
-    color: string;
-    productCategory: string;
-    price: number;
-    promotionalPrice: number;
-}
+import { Product } from '../interfaces/Product';
 
 interface CreateProductInput {
     name: string;
@@ -22,8 +13,9 @@ interface CreateProductInput {
 
 interface ProductContextType {
     products: Product[];
-    fetchProducts: (query?: string) => Promise<void>;
+    fetchProducts: () => Promise<void>;
     createProduct: (data: CreateProductInput) => Promise<void>;
+    deleteProduct: (productId: string) => Promise<void>;
 }
 
 interface ProductsProviderProps {
@@ -35,43 +27,53 @@ export const ProductsContext = createContext({} as ProductContextType);
 export function ProductsProvider({ children }: ProductsProviderProps) {
     const [products, setProducts] = useState<Product[]>([]);
 
-    const fetchProducts = useCallback(async (query?: string) => {
-        const response = await api.get('/products', {
-            params: {
-                q: query
-            }
-        })
-
-        setProducts(response.data.products.products)
+    const fetchProducts = useCallback(async () => {
+        try {
+            const response = await api.get('/products');
+            setProducts(response.data.products);
+        } catch (error) {
+            console.error(error);
+        }
     }, []);
 
     const createProduct = useCallback(
         async (data: CreateProductInput) => {
-            const { name, description, color, productCategory, price } = data
-
-            console.log(data)
-
-            const response = await api.post('/products', {
-                name,
-                description,
-                color,
-                productCategory,
-                price
-            })
-
-            setProducts(state => [response.data, ...state])
+            try {
+                const { name, description, color, productCategory, price } = data;
+                const response = await api.post('/products', {
+                    name,
+                    description,
+                    color,
+                    productCategory,
+                    price
+                });
+                setProducts(state => [response.data, ...state]);
+            } catch (error) {
+                console.error(error);
+            }
         }, []);
 
+    const deleteProduct = useCallback(
+        async (productId: string) => {
+            try {
+                await api.delete(`/products/${productId}`);
+                setProducts((state) => state.filter((product) => product.id !== productId));
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        []);
 
     useEffect(() => {
-        fetchProducts()
+        fetchProducts();
     }, [fetchProducts]);
 
     return (
         <ProductsContext.Provider value={{
             products,
             fetchProducts,
-            createProduct
+            createProduct,
+            deleteProduct
         }}>
             {children}
         </ProductsContext.Provider>

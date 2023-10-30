@@ -18,7 +18,7 @@ export class DeleteCategoryUseCase {
 
         const existingProductsWithCategory = await this.productRepository.getProductsByCategoryId(id);
 
-        if (existingProductsWithCategory) {
+        if (existingProductsWithCategory.length > 0) {
             throw new Error(`There are products with this category. Please delete them first.`);
         }
 

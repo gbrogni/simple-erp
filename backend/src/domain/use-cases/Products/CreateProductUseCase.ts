@@ -9,7 +9,7 @@ interface CreateProductUseCaseRequest {
     name: string;
     description: string;
     color: string;
-    productCategory: ProductCategory;
+    productCategory: string;
     price: number;
 }
 
@@ -33,14 +33,14 @@ export class CreateProductUseCase {
     }: CreateProductUseCaseRequest): Promise<CreateProductUseCaseResponse> {
 
         const id = randomUUID();
-        const productCategoryFound: ProductCategory = await this.productCategoryRepository.getCategoryById(productCategory.id)
+        const productCategoryFound: ProductCategory = await this.productCategoryRepository.getCategoryById(productCategory)
 
         const product: Product = {
             id,
             name,
             description,
             color,
-            productCategory,
+            productCategory: productCategoryFound,
             price,
             promotionalPrice: CalculatePromotionalPrice(price, productCategoryFound)
         };

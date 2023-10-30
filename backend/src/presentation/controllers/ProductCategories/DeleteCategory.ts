@@ -8,7 +8,7 @@ export async function DeleteCategory(request: FastifyRequest, reply: FastifyRepl
         id: z.string()
     });
 
-    const { id } = deleteCategoryBodySchema.parse(request.body);
+    const { id } = deleteCategoryBodySchema.parse(request.params);
 
     const deleteCategoryUseCase = IDeleteCategoryUseCase();
 

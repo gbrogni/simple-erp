@@ -8,7 +8,7 @@ export async function DeleteProduct(request: FastifyRequest, reply: FastifyReply
         id : z.string()
     });
 
-    const { id } = deleteProductBodySchema.parse(request.body);
+    const { id } = deleteProductBodySchema.parse(request.params);
 
     const deleteProductUseCase = IDeleteProductUseCase();
 

@@ -6,10 +6,15 @@ export class ProductCategoryRepository implements IProductCategoryRepository {
     constructor(private connection: DatabaseConnection) { }
 
     async getProductCategories(): Promise<ProductCategory[]> {
-        const query = "SELECT * FROM productCategories";
-        const categoryData = await this.connection.query(query, [], false);
-        return categoryData.map((productData: ProductCategory) => this.mapToProductCategory(productData));
-    }
+        try {
+          const query = "SELECT * FROM productCategories";
+          const categoryData = await this.connection.query(query, [], false);
+          return categoryData.map((productData: ProductCategory) => this.mapToProductCategory(productData));
+        } catch (error) {
+          console.error(error);
+          return [];
+        }
+      }
 
     async getCategoryById(categoryId: string): Promise<ProductCategory> {
         const query = "SELECT * FROM productCategories where id = $1";
@@ -22,6 +27,16 @@ export class ProductCategoryRepository implements IProductCategoryRepository {
             return this.mapToProductCategory(categoryData);
         } catch (error) {
             throw new Error("Error getting category by id");
+        }
+    }
+
+    async create(productCategory: ProductCategory): Promise<void> {
+        const query = "INSERT INTO productCategories (id, name, discount) VALUES ($1, $2, $3)";
+        const values = [productCategory.id, productCategory.name, productCategory.discount];
+        try {
+            await this.connection.query(query, values, false);
+        } catch (error) {
+            throw new Error("Error creating category");
         }
     }
 
@@ -44,7 +59,7 @@ export class ProductCategoryRepository implements IProductCategoryRepository {
             throw new Error("Error deleting category");
         }
     }
-    
+
     private mapToProductCategory(productData: ProductCategory): ProductCategory {
         return new ProductCategory(productData.id, productData.name, productData.discount);
     }

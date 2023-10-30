@@ -1,31 +1,34 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
-  background: ${props => props.theme["gray-900"]};
-  padding: 2.5rem 0 7.5rem;
-`;
+display: flex;
+align-items: center;
+justify-content: space-between;
 
-export const HeaderContent = styled.div`
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+nav {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+  gap: 0.5rem;
 
-export const NewProductButton = styled.button`
-  height: 50px;
-  border: 0;
-  background: ${props => props.theme["blue-500"]};
-  color: ${props => props.theme["white"]};
-  font-weight: bold;
-  padding: 0 1.25rem;
-  border-radius: 6px;
-  cursor: pointer;
-  &:hover {
-    background: ${props => props.theme["blue-700"]};
-    transition: background-color 0.2s;
+  a {
+    width: 3rem;
+    height: 3rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: ${(props) => props.theme['gray-100']};
+
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+
+    &:hover {
+      border-bottom: 3px solid ${(props) => props.theme['blue-500']};
+    }
+
+    &.active {
+      color: ${(props) => props.theme['blue-500']};
+    }
   }
+}
 `;

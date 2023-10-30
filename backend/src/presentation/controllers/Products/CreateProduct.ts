@@ -8,11 +8,7 @@ export async function CreateProduct(request: FastifyRequest, reply: FastifyReply
         name: z.string(),
         description: z.string(),
         color: z.string(),
-        productCategory: z.object({
-            id: z.string(),
-            name: z.string(),
-            discount: z.number(),
-        }),
+        productCategory: z.string(),
         price: z.number(),
     });
 

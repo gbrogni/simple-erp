@@ -1,13 +1,13 @@
-import { SearchFormContainer } from './styles';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useContextSelector } from 'use-context-selector';
-import { ProductsContext } from '../../../../contexts/ProductsContext';
 import { MagnifyingGlass, Plus } from 'phosphor-react';
 import { useForm } from 'react-hook-form';
-import { memo } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { NewProductModal } from '../NewProductModal';
+import { NewCategoryModal } from '../NewCategoryModal';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { memo } from 'react';
+import { SearchFormContainer } from './styles';
+import { CategoriesContext } from '../../../../contexts/CategoriesContext';
 
 const searchFormSchema = z.object({
   query: z.string(),
@@ -18,11 +18,8 @@ type SearchFormProps = {
   onSearch: (query: string) => void;
 };
 
-function SearchFormComponent({ onSearch }: SearchFormProps) {
-  const fetchProducts = useContextSelector(
-    ProductsContext,
-    (context) => context.fetchProducts
-  );
+function SearchFormComponent( { onSearch }: SearchFormProps ) {
+  const fetchCategories = useContextSelector(CategoriesContext, (context) => context.fetchCategories);
 
   const {
     register,
@@ -32,18 +29,14 @@ function SearchFormComponent({ onSearch }: SearchFormProps) {
     resolver: zodResolver(searchFormSchema),
   });
 
-  async function handleSearchProducts(data: SearchFormInputs) {
-    await fetchProducts();
+  async function handleSearchCategories(data: SearchFormInputs) {
+    await fetchCategories();
     onSearch(data.query);
   }
 
   return (
-    <SearchFormContainer onSubmit={handleSubmit(handleSearchProducts)}>
-      <input
-        type="text"
-        placeholder="Search for products"
-        {...register('query')}
-      />
+    <SearchFormContainer onSubmit={handleSubmit(handleSearchCategories)}>
+      <input type="text" placeholder="Search for categories" {...register('query')} />
       <button type="submit" disabled={isSubmitting}>
         <MagnifyingGlass size={20} />
       </button>
@@ -53,7 +46,7 @@ function SearchFormComponent({ onSearch }: SearchFormProps) {
             <Plus size={20} />
           </button>
         </Dialog.Trigger>
-        <NewProductModal />
+        <NewCategoryModal />
       </Dialog.Root>
     </SearchFormContainer>
   );
