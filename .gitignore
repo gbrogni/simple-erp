@@ -1,3 +1,6 @@
+node_modules/
+.env
+npm-debug.log
 # Logs
 logs
 *.log
@@ -7,10 +10,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
 dist
 dist-ssr
 *.local
+
+/build/
+/dist/
+/.env
+.DS_Store
 
 # Editor directories and files
 .vscode/*
